@@ -51,10 +51,10 @@ const App = () => {
 
   const deletePerson = (person) => {
     if (window.confirm(`Delete ${person.name} ?`)) {
-      deleteContact(person.id).then((response) => {
+      deleteContact(person.id).then(() => {
         setMessage({ type: "success", text: `Deleted ${person.name}` })
 
-        setPersons(persons.filter(person => person.id !== response.id))
+        setPersons(persons.filter(p => p.id !== person.id))
       }).catch(() => {
         setMessage({ type: "error", text: `Information of ${person.name} has already been removed from server` })
       }).finally(() => {
