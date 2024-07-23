@@ -18,7 +18,7 @@ const App = () => {
 
   const addPerson = (newPerson, clearFormCallback) => {
     const personIdx = persons.findIndex(person => person.name.toLowerCase() === newPerson.name.toLowerCase())
-    if (personIdx > 0) {
+    if (personIdx > -1) {
       if (window.confirm(`${newPerson.name} is already added to phonebook, replace the old number with a new one?`)) {
         const newList = [...persons];
 
@@ -28,8 +28,8 @@ const App = () => {
           newList[personIdx] = newPerson
           setPersons(newList)
           clearFormCallback()
-        }).catch(() => {
-          setMessage({ type: "error", text: `Cannot update ${newPerson.name}` })
+        }).catch((e) => {
+          setMessage({ type: "error", text: `${e.error}` })
         }).finally(() => {
           setTimeout(() => setMessage({ type: "success", text: "" }), 3000)
         })
@@ -42,8 +42,8 @@ const App = () => {
 
       setPersons(persons.concat(response))
       clearFormCallback()
-    }).catch(() => {
-      setMessage({ type: "error", text: `Cannot add ${newPerson.name}` })
+    }).catch((e) => {
+      setMessage({ type: "error", text: `${e.error}` })
     }).finally(() => {
       setTimeout(() => setMessage({ type: "success", text: "" }), 3000)
     })
@@ -55,8 +55,8 @@ const App = () => {
         setMessage({ type: "success", text: `Deleted ${person.name}` })
 
         setPersons(persons.filter(p => p.id !== person.id))
-      }).catch(() => {
-        setMessage({ type: "error", text: `Information of ${person.name} has already been removed from server` })
+      }).catch((e) => {
+        setMessage({ type: "error", text: `${e.error}` })
       }).finally(() => {
         setTimeout(() => setMessage({ type: "success", text: "" }), 3000)
       })

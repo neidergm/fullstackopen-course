@@ -4,10 +4,16 @@ const baseUrl = "/api/persons"
 
 const addContact = (newPerson) => {
     return axios.post(`${baseUrl}`, newPerson).then(response => response.data)
+        .catch(e => {
+            throw e.response.data
+        })
 }
 
 const deleteContact = (id) => {
     return axios.delete(`${baseUrl}/${id}`).then(response => response.data)
+        .catch(e => {
+            throw e.response.data
+        })
 }
 
 const getContacts = () => {
@@ -16,6 +22,9 @@ const getContacts = () => {
 
 const updateContacts = (id, data) => {
     return axios.put(`${baseUrl}/${id}`, data).then(response => response.data)
+        .catch(e => {
+            throw e.response.data
+        })
 }
 
 export {
