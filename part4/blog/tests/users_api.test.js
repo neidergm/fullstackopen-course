@@ -9,7 +9,7 @@ const logger = require('../utils/logger')
 
 const api = supertest(app);
 
-describe("Create an user", { only: true }, () => {
+describe("Create an user", () => {
     test("with valid data", async () => {
         const usersAtStart = await helper.usersInDb()
 
@@ -42,7 +42,7 @@ describe("Create an user", { only: true }, () => {
             .expect(400)
     })
 
-    test("return error if password isn't valid", { only: true }, async () => {
+    test("return error if password isn't valid", async () => {
         const user = {
             "name": `XXXXXXX`,
             "username": `neidergxxx`,

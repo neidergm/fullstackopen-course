@@ -22,16 +22,17 @@ test("Ids are defined in blogs", async () => {
     assert.strictEqual(allHaveId, true)
 })
 
-describe("Save new blog", () => {
+describe("Save new blog", { only: true }, () => {
 
-    test("with valid blog data", async () => {
+    test("with valid blog data", { only: true }, async () => {
         const initialBlogs = await api.get('/api/blogs');
 
         const newBlog = {
             title: `New test blog - ${initialBlogs.body.length + 1}`,
             author: "NeiderG",
             url: "https://test.ng",
-            likes: 0
+            likes: 0,
+            userId: "66a9187e8b2d4e5190760d70"
         }
 
         await api
