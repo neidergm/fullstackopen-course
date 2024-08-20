@@ -24,7 +24,7 @@ test("Ids are defined in blogs", async () => {
 
 describe("Save new blog", { only: true }, () => {
 
-    test("with valid blog data", { only: true }, async () => {
+    test("with valid blog data", async () => {
         const initialBlogs = await api.get('/api/blogs');
 
         const newBlog = {
@@ -32,11 +32,11 @@ describe("Save new blog", { only: true }, () => {
             author: "NeiderG",
             url: "https://test.ng",
             likes: 0,
-            userId: "66a9187e8b2d4e5190760d70"
         }
 
         await api
             .post('/api/blogs')
+            .set({ "Authorization": `Bearer ${process.env.TEST_TOKEN}` })
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
@@ -55,6 +55,7 @@ describe("Save new blog", { only: true }, () => {
 
         await api
             .post('/api/blogs')
+            .set({ "Authorization": `Bearer ${process.env.TEST_TOKEN}` })
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
@@ -74,8 +75,24 @@ describe("Save new blog", { only: true }, () => {
 
         await api
             .post('/api/blogs')
+            .set({ "Authorization": `Bearer ${process.env.TEST_TOKEN}` })
             .send(newBlog)
             .expect(400)
+    })
+
+    test("without token", { only: true }, async () => {
+        {
+            const newBlog = {
+                title: "New blog without token",
+                author: "NeiderG",
+                url: "https://test.ng",
+            }
+
+            await api
+                .post('/api/blogs')
+                .send(newBlog)
+                .expect(401)
+        }
     })
 })
 
@@ -86,6 +103,7 @@ describe("Delete a blog", () => {
         const blogToDelete = initialBlogs.body[0];
         await api
             .delete(`/api/blogs/${blogToDelete.id}`)
+            .set({ "Authorization": `Bearer ${process.env.TEST_TOKEN}` })
             .expect(204)
     })
 
