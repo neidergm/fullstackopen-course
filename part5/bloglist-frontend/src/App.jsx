@@ -15,18 +15,34 @@ const App = () => {
   const login = async (event) => {
     event.preventDefault()
     loginService.startLogin(loginData.username, loginData.password)
-    .then(response => {
-      setUser(response)
-    }).catch(error => {
-      console.log(error)
-    })
+      .then(response => {
+        setUser(response)
+        localStorage.setItem('bloglist-user', JSON.stringify(response))
+      }).catch(error => {
+        console.log(error)
+      })
+  }
+
+  const closeSession = () => {
+    setUser(null)
+    localStorage.removeItem('bloglist-user')
   }
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    const loggedUser = localStorage.getItem('bloglist-user');
+
+    if (loggedUser) {
+      setUser(JSON.parse(loggedUser))
+    }
   }, [])
+
+  useEffect(() => {
+    if (user) {
+      blogService.getAll().then(blogs =>
+        setBlogs(blogs)
+      )
+    }
+  }, [user])
 
   if (user === null) {
     return (
@@ -39,7 +55,7 @@ const App = () => {
           </div>
           <div>
             <label>Password:</label>
-            <input value={loginData.password} name="password" onChange={onChangeHandler} />
+            <input value={loginData.password} name="password" onChange={onChangeHandler} type='password' />
           </div>
 
           <div>
@@ -55,8 +71,9 @@ const App = () => {
       <h2>blogs</h2>
       <div>
         <b>{user.name} logged in</b>
+        <button onClick={closeSession}>logout</button>
       </div>
-      <br/>
+      <br />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

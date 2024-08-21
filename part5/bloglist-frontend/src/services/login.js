@@ -5,6 +5,7 @@ const startLogin = async (username, password) => {
     return response.data
 }
 
+
 export default {
-    startLogin
+    startLogin,
 }
