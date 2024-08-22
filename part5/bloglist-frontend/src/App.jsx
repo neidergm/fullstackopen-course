@@ -3,7 +3,7 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
-import "./index.css"
+import './index.css'
 import CreateBlogForm from './components/CreateBlogForm'
 import Toggleable from './components/Toggleable'
 
@@ -12,7 +12,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [loginData, setLoginData] = useState({ username: '', password: '' })
   const [notification, setNotification] = useState({ message: null })
-  const createBlogRef = useRef(null);
+  const createBlogRef = useRef(null)
 
   const onChangeHandler = ({ target }) => {
     setLoginData({ ...loginData, [target.name]: target.value })
@@ -29,8 +29,8 @@ const App = () => {
       .then(response => {
         setUser(response)
         localStorage.setItem('bloglist-user', JSON.stringify(response))
-      }).catch(error => {
-        setNotification({ message: 'wrong username or password', type: 'error' });
+      }).catch(() => {
+        setNotification({ message: 'wrong username or password', type: 'error' })
       })
   }
 
@@ -50,7 +50,7 @@ const App = () => {
       .then(returnedBlog => {
         setNotification({ message: 'a new blog added', type: 'success' })
         setBlogs(b => [...b, returnedBlog])
-        createBlogRef.current.toggleVisibility();
+        createBlogRef.current.toggleVisibility()
       })
   }
 
@@ -59,7 +59,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    const loggedUser = localStorage.getItem('bloglist-user');
+    const loggedUser = localStorage.getItem('bloglist-user')
 
     if (loggedUser) {
       setUser(JSON.parse(loggedUser))

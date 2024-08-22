@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 
 const CreateBlogForm = ({ submit }) => {
 
@@ -9,7 +10,7 @@ const CreateBlogForm = ({ submit }) => {
             url: event.target.url.value
         }
         submit(blog)
-        event.target.reset();
+        event.target.reset()
     }
 
     return (
@@ -30,6 +31,10 @@ const CreateBlogForm = ({ submit }) => {
             <button>create</button>
         </form>
     )
+}
+
+CreateBlogForm.propTypes = {
+    submit: PropTypes.func.isRequired
 }
 
 export default CreateBlogForm
