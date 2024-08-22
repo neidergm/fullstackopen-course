@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import "./index.css"
+import CreateBlogForm from './components/CreateBlogForm'
+import Toggleable from './components/Toggleable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [loginData, setLoginData] = useState({ username: '', password: '' })
   const [notification, setNotification] = useState({ message: null })
+  const createBlogRef = useRef(null);
 
   const onChangeHandler = ({ target }) => {
     setLoginData({ ...loginData, [target.name]: target.value })
@@ -36,24 +39,18 @@ const App = () => {
     localStorage.removeItem('bloglist-user')
   }
 
-  const addBlog = (e) => {
-    e.preventDefault();
+  const addBlog = (blog, e) => {
 
-    const blogObject = {
-      title: e.target.title.value,
-      author: e.target.author.value,
-      url: e.target.url.value
-    }
-
-    if (blogObject.title === '' || blogObject.author === '' || blogObject.url === '') {
+    if (blog.title === '' || blog.author === '' || blog.url === '') {
       return setNotification({ message: 'title, author and url are required', type: 'warning' })
     }
 
     blogService
-      .create(blogObject)
+      .create(blog)
       .then(returnedBlog => {
         setNotification({ message: 'a new blog added', type: 'success' })
         setBlogs(b => [...b, returnedBlog])
+        createBlogRef.current.toggleVisibility();
         e.target.reset();
       })
   }
@@ -109,25 +106,13 @@ const App = () => {
       </div>
 
       <br />
-      <div>
+      <Toggleable
+        btnText="new blog"
+        ref={createBlogRef}
+      >
         <h2>create new</h2>
-        <form onSubmit={addBlog}>
-          <div>
-            <label>Title:</label>
-            <input name="title" />
-          </div>
-          <div>
-            <label>Author:</label>
-            <input name="author" />
-          </div>
-          <div>
-            <label>Url:</label>
-            <input name="url" />
-          </div>
-
-          <button>create</button>
-        </form>
-      </div>
+        <CreateBlogForm submit={addBlog} />
+      </Toggleable>
       <br />
 
       {blogs.map(blog =>
