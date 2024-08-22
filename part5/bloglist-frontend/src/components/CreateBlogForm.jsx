@@ -17,11 +17,11 @@ const CreateBlogForm = ({ submit }) => {
         <form onSubmit={submitForm}>
             <div>
                 <label>Title:</label>
-                <input name="title" />
+                <input name="title" placeholder='title' />
             </div>
             <div>
                 <label>Author:</label>
-                <input name="author" />
+                <input name="author" placeholder='author' />
             </div>
             <div>
                 <label>Url:</label>

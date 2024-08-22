@@ -40,7 +40,7 @@ const Blog = ({ blog, refreshList, user }) => {
         {showDetails ? 'hide' : 'view'}
       </button>
 
-      <div style={showDetails ? {} : { display: 'none' }}>
+      <div className='blog-details' style={showDetails ? {} : { display: 'none' }}>
         <p> {blogData.url}</p>
         <p> {blogData.likes} likes
           <button onClick={likeBlog}>like</button>
