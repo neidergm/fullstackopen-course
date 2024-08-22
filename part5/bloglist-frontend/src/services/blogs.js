@@ -20,4 +20,11 @@ const update = async (id, newObject) => {
   return response.data
 }
 
-export default { getAll, create, update }
+const remove = async (id) => {
+  const response = await axios.delete(`${baseUrl}/${id}`, {
+    headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('bloglist-user')).token}` }
+  })
+  return response.data
+}
+
+export default { getAll, create, update, remove }

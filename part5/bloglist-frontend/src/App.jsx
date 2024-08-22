@@ -54,6 +54,10 @@ const App = () => {
       })
   }
 
+  const getBlogsList = () => {
+    blogService.getAll().then(blogs => setBlogs(blogs))
+  }
+
   useEffect(() => {
     const loggedUser = localStorage.getItem('bloglist-user');
 
@@ -64,9 +68,7 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      blogService.getAll().then(blogs =>
-        setBlogs(blogs)
-      )
+      getBlogsList()
     }
   }, [user])
 
@@ -114,9 +116,10 @@ const App = () => {
       </Toggleable>
       <br />
 
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
+      {blogs.sort((a, b) => b.likes - a.likes)
+        .map(blog =>
+          <Blog key={blog.id} blog={blog} user={user} refreshList={getBlogsList} />
+        )}
     </div>
   )
 }

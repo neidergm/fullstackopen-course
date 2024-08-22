@@ -8,7 +8,7 @@ const blogStyle = {
   background: "#f5f5f5"
 }
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, refreshList, user }) => {
 
   const [showDetails, setShowDetails] = useState(false);
   const [blogData, setBlogData] = useState(blog)
@@ -16,10 +16,20 @@ const Blog = ({ blog }) => {
   const toggleDetails = () => setShowDetails(s => !s)
 
   const likeBlog = () => {
-    const {id, user, ...blog} = blogData;
+    const { id, user, ...blog } = blogData;
     blog.likes += 1;
     blog.user = user.id;
-    blogService.update(id, blog).then(data => setBlogData(data))
+    blogService.update(id, blog).then(data => {
+      setBlogData(data)
+    })
+  }
+
+  const deleteBlog = () => {
+    if (window.confirm(`Remove blog ${blogData.title} by ${blogData.author}`)) {
+      blogService.remove(blogData.id).then(() => {
+        refreshList()
+      })
+    }
   }
 
   return (
@@ -35,6 +45,7 @@ const Blog = ({ blog }) => {
           <button onClick={likeBlog}>like</button>
         </p>
         <p>added by {blogData.user.name}</p>
+        {user.username === blog.user.username && <button onClick={deleteBlog}>Remove</button>}
       </div>
     </div>
   )

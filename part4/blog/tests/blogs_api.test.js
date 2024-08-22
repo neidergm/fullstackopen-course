@@ -22,7 +22,7 @@ test("Ids are defined in blogs", async () => {
     assert.strictEqual(allHaveId, true)
 })
 
-describe("Save new blog", { only: true }, () => {
+describe("Save new blog", () => {
 
     test("with valid blog data", async () => {
         const initialBlogs = await api.get('/api/blogs');
@@ -80,7 +80,7 @@ describe("Save new blog", { only: true }, () => {
             .expect(400)
     })
 
-    test("without token", { only: true }, async () => {
+    test("without token", async () => {
         {
             const newBlog = {
                 title: "New blog without token",
@@ -96,7 +96,7 @@ describe("Save new blog", { only: true }, () => {
     })
 })
 
-describe("Delete a blog", () => {
+describe("Delete a blog", { only: true }, () => {
     test("any valid blog id", async () => {
         const initialBlogs = await api.get('/api/blogs');
 
@@ -113,6 +113,22 @@ describe("Delete a blog", () => {
             .delete(`/api/blogs/${blog_id}`)
             .expect(400)
     })
+
+    test("Without token", async () => {
+        const blog_id = "66c4b8793ba3b9f165186243"
+        await api
+            .delete(`/api/blogs/${blog_id}`)
+            .expect(401)
+    })
+
+    test("With invalid token", { only: true }, async () => {
+        const blog_id = "66c4b8793ba3b9f165186243"
+        await api
+            .delete(`/api/blogs/${blog_id}`)
+            .set({ "Authorization": `Bearer ${process.env.TEST_TOKEN}take` })
+            .expect(401)
+    })
+
 })
 
 test("Update likes", async () => {
