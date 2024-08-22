@@ -8,7 +8,8 @@ const CreateBlogForm = ({ submit }) => {
             author: event.target.author.value,
             url: event.target.url.value
         }
-        submit(blog, event)
+        submit(blog)
+        event.target.reset();
     }
 
     return (

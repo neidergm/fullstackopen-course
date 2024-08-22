@@ -39,7 +39,7 @@ const App = () => {
     localStorage.removeItem('bloglist-user')
   }
 
-  const addBlog = (blog, e) => {
+  const addBlog = (blog) => {
 
     if (blog.title === '' || blog.author === '' || blog.url === '') {
       return setNotification({ message: 'title, author and url are required', type: 'warning' })
@@ -51,7 +51,6 @@ const App = () => {
         setNotification({ message: 'a new blog added', type: 'success' })
         setBlogs(b => [...b, returnedBlog])
         createBlogRef.current.toggleVisibility();
-        e.target.reset();
       })
   }
 
