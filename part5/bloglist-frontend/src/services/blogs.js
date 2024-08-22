@@ -13,4 +13,11 @@ const create = async (newObject) => {
   return response.data
 }
 
-export default { getAll, create }
+const update = async (id, newObject) => {
+  const response = await axios.put(`${baseUrl}/${id}`, newObject, {
+    headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('bloglist-user')).token}` }
+  })
+  return response.data
+}
+
+export default { getAll, create, update }
