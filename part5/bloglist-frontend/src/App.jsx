@@ -49,7 +49,7 @@ const App = () => {
       .create(blog)
       .then(returnedBlog => {
         setNotification({ message: 'a new blog added', type: 'success' })
-        setBlogs(b => [...b, returnedBlog])
+        setBlogs(b => [...b, { ...returnedBlog, user: { ...user, id: returnedBlog.user } }])
         createBlogRef.current.toggleVisibility()
       })
   }
@@ -116,10 +116,12 @@ const App = () => {
       </Toggleable>
       <br />
 
-      {blogs.sort((a, b) => b.likes - a.likes)
-        .map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} refreshList={getBlogsList} />
-        )}
+      <div className='blogs-list'>
+        {blogs.sort((a, b) => b.likes - a.likes)
+          .map(blog =>
+            <Blog key={blog.id} blog={blog} user={user} refreshList={getBlogsList} />
+          )}
+      </div>
     </div>
   )
 }

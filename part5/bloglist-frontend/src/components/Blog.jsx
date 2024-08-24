@@ -35,7 +35,7 @@ const Blog = ({ blog, refreshList, user }) => {
 
   return (
     <div style={blogStyle}>
-      {blogData.title} {blogData.author}
+      <span>{blogData.title} {blogData.author}</span>
       <button onClick={toggleDetails}>
         {showDetails ? 'hide' : 'view'}
       </button>
@@ -46,7 +46,7 @@ const Blog = ({ blog, refreshList, user }) => {
           <button onClick={likeBlog}>like</button>
         </p>
         <p>added by {blogData.user.name}</p>
-        {user.username === blog.user.username && <button onClick={deleteBlog}>Remove</button>}
+        {user.username === blogData.user.username && <button onClick={deleteBlog}>Remove</button>}
       </div>
     </div>
   )
