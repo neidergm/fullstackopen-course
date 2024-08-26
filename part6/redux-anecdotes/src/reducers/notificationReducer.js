@@ -2,19 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const defaultState = ''
 
-const filterReducer = createSlice(
+const notificationReducer = createSlice(
     {
-        name: "filter",
+        name: "notification",
         initialState: defaultState,
         reducers: {
-            setFilter: (state, action) => {
+            setNotification: (state, action) => {
                 return action.payload
             }
         }
     })
 
-export default filterReducer.reducer;
+export default notificationReducer.reducer;
 
 export const {
-    setFilter
-} = filterReducer.actions
+    setNotification
+} = notificationReducer.actions
