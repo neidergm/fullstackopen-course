@@ -21,13 +21,18 @@ const AnecdoteList = () => {
   }
 
   useEffect(() => {
-    dispatch(setNotification(orderedAnecdotes[0].content))
+    let timer = null;
+    if (anecdotes.length > 0) {
 
-    const timer = setTimeout(() => {
-      dispatch(setNotification(''))
-    }, 5000)
+      dispatch(setNotification(orderedAnecdotes[0].content))
 
-    return () => { clearTimeout(timer) }
+      timer = setTimeout(() => {
+        dispatch(setNotification(''))
+      }, 5000)
+
+    }
+
+    return () => { timer && clearTimeout(timer) }
   }, [anecdotes])
 
   return (
