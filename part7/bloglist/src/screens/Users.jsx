@@ -3,6 +3,7 @@ import usersService from './../services/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUsersList } from '../store/users.slice'
 import { Link } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 const Users = () => {
 
@@ -17,10 +18,12 @@ const Users = () => {
 
   return (
     <div>
-      <table>
+      <Table striped bordered hover>
         <thead>
-          <th></th>
-          <th>Blogs created</th>
+          <tr>
+            <th>User</th>
+            <th>Blogs created</th>
+          </tr>
         </thead>
         <tbody>
           {
@@ -36,7 +39,7 @@ const Users = () => {
             ))
           }
         </tbody>
-      </table>
+      </Table >
     </div>
   )
 }

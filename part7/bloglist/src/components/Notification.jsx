@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearNotification } from '../store/notifications.slice'
+import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
 
@@ -17,7 +18,7 @@ const Notification = () => {
 
   if (!message) return null
 
-  return <div className={`notification ${type}`}>{message}</div>
+  return <Alert variant={type} className='mt-4'>{message}</Alert>
 }
 
 export default Notification

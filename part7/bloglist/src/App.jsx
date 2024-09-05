@@ -13,6 +13,8 @@ import './index.css'
 import Notification from './components/Notification'
 import Navigation from './components/Navigation'
 
+import { Container } from 'react-bootstrap'
+
 const App = () => {
 
   const user = useSelector(s => s.user)
@@ -25,18 +27,19 @@ const App = () => {
     <>
       <Navigation />
 
-      <h2>blog app</h2>
+      <Container>
+        <br />
+        <h1>Blog app</h1>
+        <Notification />
+        <br />
 
-      <Notification />
-
-      <br />
-
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/users' element={<Users />} />
-        <Route path='/users/:id' element={<UserDetails />} />
-        <Route path='/blogs/:id' element={<BlogsDetails />} />
-      </Routes>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='/users/:id' element={<UserDetails />} />
+          <Route path='/blogs/:id' element={<BlogsDetails />} />
+        </Routes>
+      </Container>
     </>
   )
 }

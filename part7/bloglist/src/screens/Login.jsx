@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { setNotification } from '../store/notifications.slice'
 import loginService from './../services/login'
 import { setUserData } from '../store/user.slice'
+import { Button, Container, Form } from 'react-bootstrap'
 
 const Login = () => {
     const [loginData, setLoginData] = useState({ username: '', password: '' })
@@ -17,7 +18,7 @@ const Login = () => {
         event.preventDefault()
 
         if (loginData.username === '' || loginData.password === '') {
-            dispatch(
+            return dispatch(
                 setNotification({
                     message: 'username and password are required',
                     type: 'warning',
@@ -36,40 +37,41 @@ const Login = () => {
                 dispatch(
                     setNotification({
                         message: 'wrong username or password',
-                        type: 'error',
+                        type: 'danger',
                     })
                 )
             })
     }
 
-
     return (
-        <div>
-            <h2>Log in to application</h2>
-            <form onSubmit={login}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        value={loginData.username}
-                        name="username"
-                        onChange={onChangeHandler}
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        value={loginData.password}
-                        name="password"
-                        onChange={onChangeHandler}
-                        type="password"
-                    />
-                </div>
+        <Container>
+            <Notification />
+            <div className='d-flex flex-column mx-auto mt-5 p-5 bg-light rounded-5' style={{ maxWidth: '400px' }}>
+                <h2 className='mb-5'>Log in to application</h2>
+                <Form onSubmit={login}>
+                    <Form.Group controlId="username" className="mb-3">
+                        <Form.Label>Username:</Form.Label>
+                        <Form.Control
+                            value={loginData.username}
+                            name="username"
+                            onChange={onChangeHandler}
+                        />
+                    </Form.Group>
+                    <Form.Group controlId="password" className="mb-3">
+                        <Form.Label>Password:</Form.Label>
+                        <Form.Control
+                            value={loginData.password}
+                            name="password"
+                            onChange={onChangeHandler}
+                            type="password" />
+                    </Form.Group>
 
-                <div>
-                    <button type="submit">login</button>
-                </div>
-            </form>
-        </div>
+                    <div className='text-center mt-5'>
+                        <Button type="submit">Login</Button>
+                    </div>
+                </Form>
+            </div>
+        </Container>
     )
 }
 

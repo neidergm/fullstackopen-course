@@ -51,8 +51,10 @@ const Home = () => {
     <div>
       <br />
       <Toggleable btnText="new blog" ref={createBlogRef}>
-        <h2>create new</h2>
-        <CreateBlogForm submit={addBlog} />
+        <>
+          <h2>Create new</h2>
+          <CreateBlogForm submit={addBlog} />
+        </>
       </Toggleable>
       <br />
 

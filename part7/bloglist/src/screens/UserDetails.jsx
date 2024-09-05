@@ -22,15 +22,17 @@ const UserDetails = () => {
 
   return (
     <div>
-      <h2>{user.name}</h2>
+      <h2 className='text-muted border-start border-5 ps-3 mb-4'>{user.name}</h2>
 
-      <h4>Added blogs</h4>
-      <div>
-        <ul>
-          {user.blogs.map(b => (
-            <li key={b.id}>{b.title}</li>
-          ))}
-        </ul>
+      <div className="blog-details bg-light p-4 rounded-4">
+        <h4>Added blogs</h4>
+        <div className='mt-4'>
+          <ul>
+            {user.blogs.map(b => (
+              <li key={b.id}>{b.title}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )
