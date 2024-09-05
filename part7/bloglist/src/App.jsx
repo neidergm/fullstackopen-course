@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { clearUserData } from './store/user.slice'
+import { useSelector } from 'react-redux'
 import {
   Routes,
   Route
@@ -12,16 +11,11 @@ import BlogsDetails from './screens/BlogsDetails'
 
 import './index.css'
 import Notification from './components/Notification'
+import Navigation from './components/Navigation'
 
 const App = () => {
 
   const user = useSelector(s => s.user)
-
-  const dispatch = useDispatch()
-
-  const closeSession = () => {
-    dispatch(clearUserData())
-  }
 
   if (!user.username) {
     return <Login />
@@ -29,12 +23,9 @@ const App = () => {
 
   return (
     <>
-      <h2>blogs</h2>
+      <Navigation />
 
-      <div>
-        <h4>{user.name} logged in</h4>
-        <button onClick={closeSession}>logout</button>
-      </div>
+      <h2>blog app</h2>
 
       <Notification />
 
