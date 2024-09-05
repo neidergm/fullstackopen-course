@@ -9,13 +9,14 @@ import Toggleable from './components/Toggleable'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './store/notifications.slice'
 import { setBlogs } from './store/blogs.slice'
+import { clearUserData, setUserData } from './store/user.slice'
 
 const App = () => {
-  const [user, setUser] = useState(null)
   const [loginData, setLoginData] = useState({ username: '', password: '' })
   const createBlogRef = useRef(null)
 
   const blogs = useSelector(s => s.blogs.list)
+  const user = useSelector(s => s.user)
 
   const dispatch = useDispatch()
 
@@ -38,8 +39,9 @@ const App = () => {
     loginService
       .startLogin(loginData.username, loginData.password)
       .then((response) => {
-        setUser(response)
-        localStorage.setItem('bloglist-user', JSON.stringify(response))
+        dispatch(
+          setUserData(response)
+        )
       })
       .catch(() => {
         dispatch(
@@ -52,8 +54,7 @@ const App = () => {
   }
 
   const closeSession = () => {
-    setUser(null)
-    localStorage.removeItem('bloglist-user')
+    dispatch(clearUserData())
   }
 
   const addBlog = (blog) => {
@@ -86,21 +87,12 @@ const App = () => {
   }
 
   useEffect(() => {
-    const loggedUser = localStorage.getItem('bloglist-user')
-
-    if (loggedUser) {
-      setUser(JSON.parse(loggedUser))
-    }
-
-  }, [])
-
-  useEffect(() => {
-    if (user) {
+    if (user.username) {
       getBlogsList()
     }
   }, [user])
 
-  if (user === null) {
+  if (!user.username) {
     return (
       <div>
         <h2>Log in to application</h2>
