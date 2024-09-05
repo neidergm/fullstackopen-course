@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Blog from '../components/Blog'
 import CreateBlogForm from '../components/CreateBlogForm'
-import Notification from '../components/Notification'
 import Toggleable from '../components/Toggleable'
 import { useEffect, useRef } from 'react'
 import { setNotification } from '../store/notifications.slice'

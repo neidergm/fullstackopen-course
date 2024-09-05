@@ -8,6 +8,7 @@ import Login from './screens/Login'
 import Home from './screens/Home'
 import Users from './screens/Users'
 import UserDetails from './screens/UserDetails'
+import BlogsDetails from './screens/BlogsDetails'
 
 import './index.css'
 import Notification from './components/Notification'
@@ -43,6 +44,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/:id' element={<UserDetails />} />
+        <Route path='/blogs/:id' element={<BlogsDetails />} />
       </Routes>
     </>
   )
