@@ -7,6 +7,7 @@ import {
 import Login from './screens/Login'
 import Home from './screens/Home'
 import Users from './screens/Users'
+import UserDetails from './screens/UserDetails'
 
 import './index.css'
 import Notification from './components/Notification'
@@ -41,6 +42,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/users/:id' element={<UserDetails />} />
       </Routes>
     </>
   )

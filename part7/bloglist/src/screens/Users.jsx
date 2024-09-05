@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import usersService from './../services/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUsersList } from '../store/users.slice'
+import { Link } from 'react-router-dom'
 
 const Users = () => {
 
@@ -10,7 +11,6 @@ const Users = () => {
 
   useEffect(() => {
     usersService.getUsers().then((response) => {
-      console.log(response)
       dispatch(setUsersList(response))
     })
   }, [])
@@ -26,7 +26,11 @@ const Users = () => {
           {
             users.map(u => (
               <tr key={u.id}>
-                <td>{u.name}</td>
+                <td>
+                  <Link to={`${u.id}`}>
+                    {u.name}
+                  </Link>
+                </td>
                 <td>{u.blogs.length}</td>
               </tr>
             ))
