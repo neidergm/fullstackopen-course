@@ -6,14 +6,16 @@ import Notification from './components/Notification'
 import './index.css'
 import CreateBlogForm from './components/CreateBlogForm'
 import Toggleable from './components/Toggleable'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './store/notifications.slice'
+import { setBlogs } from './store/blogs.slice'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [loginData, setLoginData] = useState({ username: '', password: '' })
   const createBlogRef = useRef(null)
+
+  const blogs = useSelector(s => s.blogs.list)
 
   const dispatch = useDispatch()
 
@@ -69,16 +71,18 @@ const App = () => {
         setNotification({ message: 'a new blog added', type: 'success' })
       )
 
-      setBlogs((b) => [
-        ...b,
-        { ...returnedBlog, user: { ...user, id: returnedBlog.user } },
-      ])
+      dispatch(
+        setBlogs([
+          ...blogs,
+          { ...returnedBlog, user: { ...user, id: returnedBlog.user } },
+        ])
+      )
       createBlogRef.current.toggleVisibility()
     })
   }
 
   const getBlogsList = () => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    blogService.getAll().then((blogs) => dispatch(setBlogs(blogs)))
   }
 
   useEffect(() => {
@@ -147,7 +151,7 @@ const App = () => {
       <br />
 
       <div className="blogs-list">
-        {blogs
+        {[...blogs]
           .sort((a, b) => b.likes - a.likes)
           .map((blog) => (
             <Blog
