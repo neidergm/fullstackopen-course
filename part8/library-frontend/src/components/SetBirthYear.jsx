@@ -12,7 +12,6 @@ const SetBirthYear = () => {
 
     const submit = (e) => {
         e.preventDefault()
-
         updateAuthor({ variables: { name, born: Number(born) } })
 
         setName('')
@@ -30,6 +29,7 @@ const SetBirthYear = () => {
                 <div>
                     name
                     <select value={name} onChange={(e) => setName(e.target.value)} disabled={!authors?.allAuthors.length}>
+                        <option value={""}>Seleccione...</option>
                         {authors?.allAuthors.map(author => <option key={author.name} value={author.name}>{author.name}</option>)}
                     </select>
                 </div>
