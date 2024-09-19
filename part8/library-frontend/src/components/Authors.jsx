@@ -19,6 +19,7 @@ const Authors = (props) => {
     return <div>{error.message}</div>;
   }
 
+
   const authors = data.allAuthors
 
   return (
@@ -43,16 +44,17 @@ const Authors = (props) => {
         </table>
       </div>
 
-      <div>
+      {props.loggedIn && <div>
         <h2>Set birthyear</h2>
         <SetBirthYear />
-      </div>
+      </div>}
     </>
   )
 }
 
 Authors.propTypes = {
-  show: PropTypes.bool
+  show: PropTypes.bool,
+  loggedIn: PropTypes.bool
 }
 
 export default Authors

@@ -79,13 +79,21 @@ const resolvers = {
     Query: {
         authorCount: async () => await Author.countDocuments({}),
         bookCount: async () => await Book.countDocuments({}),
-        allBooks: async (_, { author, genre }) => {
+        allBooks: async (_, { author, genre }, { currentUser }) => {
+            if (!currentUser) {
+                throw new GraphQLError('not authenticated', {
+                    extensions: {
+                        code: 'BAD_USER_INPUT',
+                    }
+                })
+            }
+
             let filter = {};
             // if (author) {
             //     list = list.filter(book => book.author === author)
             // }
             if (genre) {
-                filter.genres = genre
+                filter.genres = genre === "recommended" ? currentUser.favoriteGenre : genre
             }
             return await Book.find(filter)
         },
