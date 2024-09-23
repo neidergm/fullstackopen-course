@@ -21,14 +21,5 @@ const calculateExercises = (daily_exercises: Array<number>, target: number) => {
     }
 };
 
-const parseArguments = (args: Array<string>) => {
-    if (args.length < 4) throw new Error('Not enough arguments');
-    const daily_exercises = args.slice(2, -1).map(Number);
-    const target = Number(args[args.length - 1]);
-    if (isNaN(target)) throw new Error('Provided values were not numbers!');
-    return { daily_exercises, target };
-};
+export default calculateExercises;
 
-const { daily_exercises, target } = parseArguments(process.argv);
-console.log(daily_exercises, target);
-console.log(calculateExercises(daily_exercises, target));
