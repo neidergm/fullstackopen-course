@@ -1,6 +1,6 @@
-import { CoursePartBase } from "../types"
+import { CoursePart } from "../types"
 
-const Total = ({ courseParts }: { courseParts: CoursePartBase[] }) => {
+const Total = ({ courseParts }: { courseParts: CoursePart[] }) => {
 
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
 
