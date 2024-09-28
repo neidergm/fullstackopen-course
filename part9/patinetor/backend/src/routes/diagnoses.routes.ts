@@ -8,6 +8,4 @@ router.get('/', (_req, res) => {
     res.send(diagnoses);
 });
 
-const diagnosesRouter = router;
-
-export default diagnosesRouter;
+export default router;

@@ -24,3 +24,4 @@ export const addPatient = (patient: NewPatient): Patient => {
     patientsData.push(newPatient);
     return newPatient;
 };
+
